@@ -1,0 +1,125 @@
+window.onload = () => {
+    const greetings = [
+        "Hi 👋 Welcome!",
+        "Hello 😊 How can I help you today?",
+        "Hey there! Feel free to ask me anything 🌟"
+    ];
+
+    const greet = greetings[Math.floor(Math.random() * greetings.length)];
+    add(greet, "bot");
+};
+
+const chatArea = document.getElementById("chatArea");
+const input = document.getElementById("question");
+
+input.addEventListener("keydown", e => {
+    if (e.key === "Enter") ask();
+});
+
+function ask() {
+    const q = input.value.trim();
+    if (!q) return;
+
+    add(q, "user");
+    input.value = "";
+
+    setTimeout(() => {
+        add(buildAnswer(q), "bot");
+    }, 600);
+}
+
+function speakText(text) {
+    // Remove emojis and special formatting for speech
+    const cleanText = text.replace(/[^\w\s\-']/g, ' ').trim();
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    window.speechSynthesis.speak(utterance);
+}
+
+function add(text, type) {
+    const div = document.createElement("div");
+    div.className = type;
+    div.innerText = text;
+    chatArea.appendChild(div);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    
+    // Make the bot speak when it responds
+    if (type === "bot") {
+        speakText(text);
+    }
+}
+
+function buildAnswer(question) {
+
+    const q = question.toLowerCase();
+    const today = new Date();
+    const player = document.getElementById("audioPlayer");
+
+    // 🔹 TIME
+    if (q.includes("time")) {
+        return "The current time is ⏰ " + today.toLocaleTimeString();
+    }
+
+    // 🔹 TOMORROW / YESTERDAY
+    if (q.includes("tomorrow")) {
+        const t = new Date(today);
+        t.setDate(today.getDate() + 1);
+        return "Tomorrow's date is 📅 " + t.toLocaleDateString();
+    }
+
+    if (q.includes("yesterday")) {
+        const y = new Date(today);
+        y.setDate(today.getDate() - 1);
+        return "Yesterday's date was 📅 " + y.toLocaleDateString();
+    }
+
+    if (q.includes("date") || q.includes("today")) {
+        return "Today's date is 📅 " + today.toLocaleDateString();
+    }
+
+    // 🎶 TAMIL SONG REQUESTS
+    if (q.includes("tamil song") || q.includes("play song")) {
+
+        // Default song
+        player.src = "songs/arabic_kuthu.mp3";
+        player.style.display = "block";
+        player.play();
+
+        return "🎶 Playing a Tamil song for you 😊 Relax and enjoy!";
+    }
+
+    if (q.includes("vaathi")) {
+        player.src = "songs/vaathi_coming.mp3";
+        player.style.display = "block";
+        player.play();
+
+        return "🔥 Playing *Vaathi Coming*! Enjoy the vibe 😎";
+    }
+
+    // 🔹 SIMPLE KNOWLEDGE
+    if (q.includes("what is html")) {
+        return "HTML is used to create the structure of web pages.";
+    }
+
+    if (q.includes("what is css")) {
+        return "CSS is used to style web pages.";
+    }
+
+    if (q.includes("who are you")) {
+        return "I’m your friendly offline assistant 😊 Always here to help.";
+    }
+
+    // 🌟 UNIVERSAL FRIENDLY RESPONSE
+    return (
+        "That’s interesting 😊\n\n" +
+        "I’m here to help you feel relaxed and informed.\n\n" +
+        "You can ask me about:\n" +
+        "• Date & Time\n" +
+        "• Tamil songs 🎶\n" +
+        "• HTML / CSS / JS\n" +
+        "• Projects\n\n" +
+        "Just ask 💬"
+    );
+}

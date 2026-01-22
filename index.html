@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Answer Composer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+    <div class="header">🧠 Smart Answer Composer</div>
+
+    <div class="chat-area" id="chatArea">
+        <div class="bot">
+            Ask me anything. I’ll explain it clearly 🙂
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="question" placeholder="Ask your question here..." />
+        <button onclick="ask()">Ask</button>
+    </div>
+    
+    <audio id="audioPlayer" style="display:none;"></audio>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
