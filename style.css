@@ -125,13 +125,6 @@ function buildAnswer(question) {
 
     // 🌟 UNIVERSAL FRIENDLY RESPONSE
     return (
-        "That's interesting 😊\n\n" +
-        "I'm here to help you feel relaxed and informed.\n\n" +
-        "You can ask me about:\n" +
-        "• Date & Time\n" +
-        "• Tamil songs 🎶\n" +
-        "• HTML / CSS / JS\n" +
-        "• Projects\n\n" +
-        "Just ask 💬"
     );
 }
+
